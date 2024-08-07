@@ -1,1 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
+
+@import "@angular/cdk/overlay-prebuilt.css";
+@import "@angular/cdk/a11y-prebuilt.css";
+
+
+:root {
+  font-size: 12px;
+
+  --main-color: #0f2a3d;
+}
+
+* {
+  font-family: 'Bai Jamjuree', sans-serif;
+  font-size: var(--font-size);
+}
+
+body {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  background: var(--main-color);
+}
