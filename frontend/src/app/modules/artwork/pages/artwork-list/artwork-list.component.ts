@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ArtworkService } from '../../artwork.service';
 import { HttpParams } from '@angular/common/http';
+import { Artwork } from '../../../../models/common.model';
 
 @Component({
   selector: 'app-artwork-list',
@@ -16,6 +17,10 @@ export class ArtworkListComponent implements OnInit {
 
   loading: boolean = false;
 
+  config: string = '';
+
+  artworks: Artwork[] = []; 
+
   constructor(
     private artworkService: ArtworkService
   ) { }
@@ -28,10 +33,13 @@ export class ArtworkListComponent implements OnInit {
     this.loading = true;
     const params = new HttpParams()
       .set('page', this.page.toString())
+      .set('limit', this.pageSize.toString());
     this.artworkService.getArtworks(params).subscribe({
       next: (res) => {
         this.loading = false;
-        console.warn(res);
+        this.artworks = res.data;
+        this.count = res.pagination.total;
+        this.config = res.config.iiif_url;
       },
       error: (err) => {
         console.error(err);
@@ -40,14 +48,17 @@ export class ArtworkListComponent implements OnInit {
   }
 
   prevPage() {
-    this.page--;
+    this.page = this.page - 1;
+    this.getArtworks();
   }
 
   nextPage() {
-      this.page++;
+    this.page = this.page + 1;
+    this.getArtworks();
   }
 
   goToPage(n: number) {
-      this.page = n;
+    this.page = n;
+    this.getArtworks();
   }
 }

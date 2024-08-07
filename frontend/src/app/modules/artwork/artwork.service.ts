@@ -2,6 +2,7 @@ import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ApiService } from '../../services/api.service';
 import { APIS } from '../../constants/api.constants';
+import { $PaginatedResponse, Artwork, PaginatedResponse } from '../../models/common.model';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class ArtworkService {
     private apiService: ApiService,
   ) { }
 
-  getArtworks(params: HttpParams) {
-    return this.apiService.get(APIS.v1.artworks, params);
+  getArtworks(params: HttpParams): $PaginatedResponse<Artwork> {
+    return this.apiService.get<PaginatedResponse<Artwork>>(APIS.v1.artworks, params);
   }
 }
