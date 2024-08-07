@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HomeRoutingModule } from './home-routing.module';
 import { ArtworkListComponent } from './pages/artwork-list/artwork-list.component';
+import { ArtworkRoutingModule } from './artwork-routing.module';
 
 
 
@@ -11,7 +11,8 @@ import { ArtworkListComponent } from './pages/artwork-list/artwork-list.componen
   ],
   imports: [
     CommonModule,
-    HomeRoutingModule,
+    ArtworkRoutingModule,
   ]
 })
-export class HomeModule { }
+export class ArtWorkModule { }
+
