@@ -1,0 +1,12 @@
+$header-height: 100px;
+
+.header-box {
+  height: $header-height;
+  line-height: $header-height;
+}
+
+.content-box {
+  height: calc(100vh - #{$header-height});
+  max-width: var(--max-content-width);
+  margin: auto;
+}

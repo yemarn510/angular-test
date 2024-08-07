@@ -8,11 +8,11 @@
   font-size: 12px;
 
   --main-color: #0f2a3d;
+  --max-content-width: 1200px;
 }
 
 * {
   font-family: 'Bai Jamjuree', sans-serif;
-  font-size: var(--font-size);
 }
 
 body {
@@ -20,4 +20,12 @@ body {
   padding: 0;
   margin: 0;
   background: var(--main-color);
+}
+
+.text-center {
+  text-align: center;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+  margin: 0;
 }
