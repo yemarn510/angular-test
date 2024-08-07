@@ -1,0 +1,9 @@
+@if (showLoading() === true) {
+<div class="whole-page">
+  <nx-spinner
+    size="large"
+    [activationAnnouncement]="'Loading large data'"
+    [completionAnnouncement]="'Done loading large data'">
+  </nx-spinner>
+</div>
+}
