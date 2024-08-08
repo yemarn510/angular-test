@@ -21,4 +21,14 @@ describe('LoadingSpinnerComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should show spinner', () => {
+    expect(fixture.nativeElement.querySelector('.whole-page')).toBeTruthy();
+  });
+
+  it('should hide spinner', () => {
+    fixture.componentRef.setInput('showLoading', false);
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('.whole-page')).toBeFalsy();
+  });
 });
