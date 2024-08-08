@@ -1,14 +1,35 @@
 
 
-<div class="filter-container">
-  <nx-formfield label="Style">
-    <nx-multi-select
-      [options]="artworkStyles"
-      [(ngModel)]="selectedStyles"
-      (selectionChange)="filterArtworks()"
-      selectLabel="label"
-      selectValue="value"></nx-multi-select>
-  </nx-formfield>
+<div class="filter-container"
+  nxLayout="grid">
+  <div nxRow class="nx-margin-bottom-m">
+    <div nxCol="12, 12, 6">
+      <h2 class="custom-margin-b">Filter:</h2>
+      <nx-formfield label="Style">
+        <nx-multi-select
+          [options]="artworkStyles"
+          [(ngModel)]="selectedStyles"
+          (selectionChange)="filterArtworks()"
+          selectLabel="label"
+          selectValue="value"></nx-multi-select>
+      </nx-formfield>
+    </div>
+    <div nxCol="12, 12, 6">
+      <h2 class="custom-margin-b">Sort by:</h2>
+      <nx-formfield label="Recommendation">
+        <nx-dropdown
+          (selectionChange)="sortArtwork()"
+          [(ngModel)]="sortBy">
+          @for (option of sortByList; track option) {
+          <nx-dropdown-item
+            [value]="option">
+            {{ sortByValueAndLabelConnection[option] }}
+          </nx-dropdown-item>
+          }
+        </nx-dropdown>
+      </nx-formfield>
+    </div>
+  </div>
 </div>
 
 <div class="artwork-container">

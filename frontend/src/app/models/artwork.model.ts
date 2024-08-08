@@ -47,8 +47,8 @@ export interface Artwork {
 	main_reference_number: string;
 	has_not_been_viewed_much: boolean;
 	boost_rank?: string;
-	date_start: number;
-	date_end: number;
+	date_start: string;
+	date_end: string;
 	date_display: string;
 	date_qualifier_title: string;
 	date_qualifier_id?: number;

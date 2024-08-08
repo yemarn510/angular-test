@@ -6,13 +6,17 @@
   margin-top: 2rem;
 }
 
+.custom-margin-b {
+  margin-bottom: 0.5rem;
+}
+
 .artwork-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(100px, 250px));
   justify-content: center;
   gap: 1rem;
   overflow-y: auto;
-  max-height: calc(100dvh - 200px);
+  max-height: calc(100dvh - 300px);
 }
 
 .artwork-box {
@@ -48,3 +52,8 @@
   }
 }
 
+.filter-container {
+  max-width: 800px;
+  padding: 0 2rem;
+  margin: auto;
+}

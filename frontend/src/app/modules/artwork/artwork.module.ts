@@ -11,7 +11,11 @@ import {
 } from '@aposin/ng-aquila/dropdown';
 import { NxMultiSelectComponent } from '@aposin/ng-aquila/dropdown';
 import { FormsModule } from '@angular/forms';
-
+import {
+  NxColComponent,
+  NxLayoutComponent,
+  NxRowComponent,
+} from '@aposin/ng-aquila/grid';
 
 
 @NgModule({
@@ -25,7 +29,12 @@ import { FormsModule } from '@angular/forms';
 
     NxPaginationComponent,
     NxFormfieldComponent,
+    NxRowComponent,
+    NxColComponent,
+    NxLayoutComponent,
     NxMultiSelectComponent,
+    NxDropdownComponent,
+    NxDropdownItemComponent,
 
     LoadingSpinnerComponent,    
   ],

@@ -24,6 +24,20 @@ export class ArtworkListComponent implements OnInit {
   copiedArtworks: Artwork[] = [];
   artworkStyles: ArtworkStyleDropdown[] = [];
 
+  sortBy: keyof Artwork | string = '';
+
+  sortByValueAndLabelConnection: { [key in string]: string } = {
+    title: 'Name',
+    artist_title: 'Artist',
+    date_start: 'Date'
+  }
+
+  sortByList: string[] = [
+    'title',
+    'artist_title',
+    'date_start',
+  ]
+
   constructor(
     private artworkService: ArtworkService
   ) { }
@@ -40,11 +54,12 @@ export class ArtworkListComponent implements OnInit {
     this.artworkService.getArtworks(params).subscribe({
       next: (res) => {
         this.loading = false;
-        this.artworks = res.data;
         this.copiedArtworks = structuredClone(res.data);
         this.count = res.pagination.total;
         this.config = res.config.iiif_url;
-        this.artworkStyles = this.createStyleList(this.artworks);
+        this.selectedStyles = [];
+        this.artworkStyles = this.createStyleList(res.data);
+        this.sortArtwork();
       },
       error: (err) => {
         console.error(err);
@@ -100,6 +115,28 @@ export class ArtworkListComponent implements OnInit {
 
     this.artworks = this.copiedArtworks.filter((artwork) => {
       return artwork.style_titles.some((style) => this.selectedStyles.includes(style));
+    });
+  }
+
+  sortArtwork(): void {
+    if (!this.sortBy) {
+      this.artworks = structuredClone(this.copiedArtworks);
+      return;
+    }
+
+    if (this.sortBy === 'date_start') {
+      this.artworks = this.copiedArtworks.sort((first, second) => {
+        const firstDate = new Date(first.date_start as string);
+        const secondDate = new Date(second.date_start as string);
+        return firstDate.getTime() - secondDate.getTime();
+      });
+      return;
+    }
+
+    this.artworks = this.copiedArtworks.sort((first, second) => {
+      const firstString = (first[this.sortBy as keyof Artwork] || '') as string;
+      const secondString = (second[this.sortBy as keyof Artwork] || '') as string;
+      return firstString.localeCompare(secondString);
     });
   }
 }
