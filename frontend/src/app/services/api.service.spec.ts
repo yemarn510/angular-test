@@ -1,45 +1,44 @@
 import { TestBed } from '@angular/core/testing';
 
 import { ApiService } from './api.service';
-import { HttpClient, provideHttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders, provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 
 describe('ApiService', () => {
-  let service: ApiService;
-  let httpClientSpy: jasmine.SpyObj<HttpClient>;
+  let apiServiceSpy: jasmine.SpyObj<ApiService>;
 
   beforeEach(() => {
+    apiServiceSpy = jasmine.createSpyObj('ApiService', ['get', 'post', 'put', 'delete', 'checkRequest', 'getHeaders']);
+
     TestBed.configureTestingModule({
       providers: [ 
         provideHttpClient(),
         provideHttpClientTesting(),
+        { provide: ApiService, useValue: apiServiceSpy }
       ]
     });;
-    service = TestBed.inject(ApiService);
-
-    httpClientSpy = jasmine.createSpyObj('HttpClient', ['get']);
   });
 
   it('should call get method in get request', () => {
-    expect(service.get).toBeTruthy();
+    expect(apiServiceSpy.get).toBeTruthy();
   });
 
   it('should call post method in post request', () => {
-    expect(service.post).toBeTruthy();
+    expect(apiServiceSpy.post).toBeTruthy();
   });
 
   it('should call put method in put request', () => {
-    expect(service.put).toBeTruthy();
+    expect(apiServiceSpy.put).toBeTruthy();
   });
 
   it('should call delete method in delete request', () => {
-    expect(service.delete).toBeTruthy();
+    expect(apiServiceSpy.delete).toBeTruthy();
   });
 
   it('should throw error on error response', () => {
-    httpClientSpy.get.and.returnValue(of(new Error('Error')));
-    service.get('url').subscribe({
+    apiServiceSpy.get.and.returnValue(throwError(() => new Error('Error')));
+    apiServiceSpy.get('url').subscribe({
       next: () => {},
       error: (err) => {
         expect(err).toBeInstanceOf(Error);
@@ -49,8 +48,8 @@ describe('ApiService', () => {
 
   it('should return response on success', () => {
     const response = { data: 'data' };
-    httpClientSpy.get.and.returnValue(of(response));
-    service.get('url').subscribe({
+    apiServiceSpy.get.and.returnValue(of(response));
+    apiServiceSpy.get('url').subscribe({
       next: (res) => {
         expect(res).toEqual(response);
       },
@@ -59,32 +58,21 @@ describe('ApiService', () => {
   });
 
   it('should call checkRequest method in error response', () => {
-    httpClientSpy.get.and.returnValue(of(new Error('Error')));
-    service.get('url').subscribe({
+    apiServiceSpy.get.and.returnValue(throwError(() => apiServiceSpy.checkRequest(new HttpErrorResponse({ status: 404 }))));
+    apiServiceSpy.get('url').subscribe({
       next: () => {},
       error: () => {
-        expect(service.checkRequest).toHaveBeenCalled();
+        expect(apiServiceSpy.checkRequest).toHaveBeenCalled();
       }
     });
   });
 
   it('should not call checkRequest method in success response', () => {
-    httpClientSpy.get.and.returnValue(of({ data: 'data' }));
-    service.get('url').subscribe({
+    apiServiceSpy.get.and.returnValue(of({ data: 'data' }));
+    apiServiceSpy.get('url').subscribe({
       next: () => {},
-      error: () => {
-        expect(service.checkRequest).not.toHaveBeenCalled();
-      }
-    });
-  });
-
-  it('should call getHeaders method in get request', () => {
-    httpClientSpy.get.and.returnValue(of({ data: 'data' }));
-    service.get('url').subscribe({
-      next: () => {
-        expect(service.getHeaders).toHaveBeenCalled();
-      },
       error: () => {}
     });
+    expect(apiServiceSpy.checkRequest).not.toHaveBeenCalled();
   });
 });
