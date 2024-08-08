@@ -47,18 +47,19 @@ export class ArtworkListComponent implements OnInit {
   }
 
   getArtworks(): void {
+    // to get the list of artworks from the api call
     this.loading = true;
     const params = new HttpParams()
       .set('page', this.page.toString())
       .set('limit', this.pageSize.toString());
     this.artworkService.getArtworks(params).subscribe({
       next: (res) => {
-        this.loading = false;
-        this.copiedArtworks = structuredClone(res.data);
-        this.count = res.pagination.total;
-        this.config = res.config.iiif_url;
+        this.loading = false; // to stop the loading spinner
+        this.copiedArtworks = structuredClone(res.data); // deep copy to reuse again and again
+        this.count = res.pagination.total; // to set the total count of the artworks
+        this.config = res.config.iiif_url; // to get the iiif url for the images
         this.selectedStyles = [];
-        this.artworkStyles = this.createStyleList(res.data);
+        this.artworkStyles = this.createStyleList(res.data); // to create the list of styles for dropdown
         this.filterAndSortArtworks();
       },
       error: (err) => {
@@ -83,11 +84,21 @@ export class ArtworkListComponent implements OnInit {
   }
 
   createStyleList(artworks: Artwork[]): ArtworkStyleDropdown[] {
+    /*
+      to create the list of styles for the dropdown
+      this function will be called whenever the artworks are fetched
+    */
     if (!artworks.length) {
       return [];
     }
 
     const groupByArtworkStyles: { [key in string]: number} = {};
+
+    /*
+      to group the styles and count the number of artworks for each style
+      example: groupByArtworkStyles = { 'Classic': 2, 'Modernism': 1 }
+      return value: [ { value: 'Classic', label: 'Classic (2)' }, { value: 'Modernism', label: 'Modernism (1)' } ]
+    */
 
     artworks.forEach((artwork) => {
       artwork.style_titles.forEach((style) => {
@@ -108,6 +119,10 @@ export class ArtworkListComponent implements OnInit {
   }
 
   filterArtworks(artworkList: Artwork[] = this.copiedArtworks): Artwork[] {
+    /*
+      to filter the artworks based on the selected styles
+      if no styles are selected, return the original list
+    */
     if (!this.selectedStyles.length) {
       return structuredClone(artworkList);
     }
@@ -118,6 +133,12 @@ export class ArtworkListComponent implements OnInit {
   }
 
   sortArtworks(artworkList: Artwork[] = this.copiedArtworks): Artwork[] {
+    /*
+      to sort the artworks based on the selected sort by
+      sorted by can be title, artist_title, date_start
+      if no sort by is selected, return the original list
+    */
+
     if (!this.sortBy) {
       return structuredClone(artworkList);
     }
@@ -138,6 +159,11 @@ export class ArtworkListComponent implements OnInit {
   }
 
   filterAndSortArtworks(): void {
+    /*
+      to filter and sort the artworks based on the selected styles and sort by
+      this function will be called whenever the selected styles or sort by changes
+      both function call is needed to maintain the sorting and the filtering.
+    */
     this.artworks = this.filterArtworks();
     this.artworks = this.sortArtworks(this.artworks);
   }
