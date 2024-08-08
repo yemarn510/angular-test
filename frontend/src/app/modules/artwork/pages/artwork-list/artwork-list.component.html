@@ -33,8 +33,9 @@
 </div>
 
 <div class="artwork-container">
-  @for (eachArtwork of artworks; track eachArtwork.id) {
-  <div class="artwork-box">
+  @for (eachArtwork of artworks; track eachArtwork.id; let index = $index) {
+  <div class="artwork-box"
+    [@flyInOut]="{value: '', params: {delay: index * 150 }}">
     <div class="artwork-image">
       <img
         [src]=" config + '/' + eachArtwork.image_id + '/full/843,/0/default.jpg' "

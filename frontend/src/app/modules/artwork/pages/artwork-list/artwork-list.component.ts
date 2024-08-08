@@ -2,11 +2,21 @@ import { Component, OnInit } from '@angular/core';
 import { ArtworkService } from '../../artwork.service';
 import { HttpParams } from '@angular/common/http';
 import { Artwork, ArtworkStyleDropdown } from '../../../../models/artwork.model';
+import { trigger, state, style, transition, animate, query, stagger, animation } from '@angular/animations';
+
 
 @Component({
   selector: 'app-artwork-list',
   templateUrl: './artwork-list.component.html',
-  styleUrl: './artwork-list.component.scss'
+  styleUrl: './artwork-list.component.scss',
+  animations: [
+    trigger('flyInOut', [
+      transition('void => *', [
+        style({ transform: 'translateY(30%)', opacity: 0}),
+        animate('500ms {{delay}}ms ease-out'),
+      ], { params: { delay: 0 } }),
+    ]),
+  ],
 })
 export class ArtworkListComponent implements OnInit {
 
