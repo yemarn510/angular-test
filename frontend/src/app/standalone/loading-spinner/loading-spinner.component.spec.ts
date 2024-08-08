@@ -14,6 +14,7 @@ describe('LoadingSpinnerComponent', () => {
 
     fixture = TestBed.createComponent(LoadingSpinnerComponent);
     component = fixture.componentInstance;
+    fixture.componentRef.setInput('showLoading', true);
     fixture.detectChanges();
   });
 

@@ -124,8 +124,8 @@ export class ArtworkListComponent implements OnInit {
 
     if (this.sortBy === 'date_start') {
       return artworkList.sort((first, second) => {
-        const firstDate = new Date(first.date_start as string);
-        const secondDate = new Date(second.date_start as string);
+        const firstDate = new Date(first.date_start);
+        const secondDate = new Date(second.date_start);
         return firstDate.getTime() - secondDate.getTime();
       });
     }

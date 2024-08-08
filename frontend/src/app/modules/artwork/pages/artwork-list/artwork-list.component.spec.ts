@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ArtworkListComponent } from './artwork-list.component';
+import { ArtWorkModule } from '../../artwork.module';
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 
 describe('ArtworkListComponent', () => {
   let component: ArtworkListComponent;
@@ -8,7 +11,12 @@ describe('ArtworkListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ArtworkListComponent]
+      imports: [ArtWorkModule],
+      providers: [ 
+        provideHttpClient(),
+        provideHttpClientTesting(),
+      ],
+      declarations: [ArtworkListComponent],
     })
     .compileComponents();
 
