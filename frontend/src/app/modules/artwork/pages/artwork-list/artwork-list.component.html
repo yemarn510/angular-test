@@ -5,6 +5,7 @@
     <nx-multi-select
       [options]="artworkStyles"
       [(ngModel)]="selectedStyles"
+      (selectionChange)="filterArtworks()"
       selectLabel="label"
       selectValue="value"></nx-multi-select>
   </nx-formfield>

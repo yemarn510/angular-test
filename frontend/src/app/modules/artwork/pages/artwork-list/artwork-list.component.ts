@@ -21,6 +21,7 @@ export class ArtworkListComponent implements OnInit {
   selectedStyles: string[] = [];
 
   artworks: Artwork[] = [];
+  copiedArtworks: Artwork[] = [];
   artworkStyles: ArtworkStyleDropdown[] = [];
 
   constructor(
@@ -40,6 +41,7 @@ export class ArtworkListComponent implements OnInit {
       next: (res) => {
         this.loading = false;
         this.artworks = res.data;
+        this.copiedArtworks = structuredClone(res.data);
         this.count = res.pagination.total;
         this.config = res.config.iiif_url;
         this.artworkStyles = this.createStyleList(this.artworks);
@@ -87,6 +89,17 @@ export class ArtworkListComponent implements OnInit {
         value: key,
         label: `${key} (${groupByArtworkStyles[key]})`
       };
+    });
+  }
+
+  filterArtworks(): void {
+    if (!this.selectedStyles.length) {
+      this.artworks = structuredClone(this.copiedArtworks);
+      return;
+    }
+
+    this.artworks = this.copiedArtworks.filter((artwork) => {
+      return artwork.style_titles.some((style) => this.selectedStyles.includes(style));
     });
   }
 }
