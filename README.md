@@ -1,6 +1,7 @@
-# Frontend
+# Angular Test
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.1.3.
+This project used `@aposin/ng-aquila` library for the UI components.
 
 ## Folder Structure
 
