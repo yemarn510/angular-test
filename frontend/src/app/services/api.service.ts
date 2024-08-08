@@ -23,14 +23,6 @@ export class ApiService {
     };
   }
 
-  getBlob(url?: string, params?: HttpParams): Observable<ArrayBuffer> {
-    return this.http.get(url || '', {
-      ...this.getHeaders(),
-      responseType: 'arraybuffer',
-      params: params,
-    });
-  }
-
   post<T = unknown>(url: string, data: Object | FormData): Observable<T> {
     return this.http.post<T>(url, data, { ...this.getHeaders() }).pipe(
       catchError((error) => {
@@ -38,23 +30,6 @@ export class ApiService {
         return throwError(error);
       }),
     );
-  }
-
-  postText(url: string, data: Object | FormData): Observable<string> {
-    return this.http.post(url, data, {
-      ...this.getHeaders(),
-      responseType: 'text',
-    });
-  }
-
-  postBlob<T = unknown>(
-    url: string,
-    data: Object | FormData,
-  ): Observable<ArrayBuffer> {
-    return this.http.post(url, data, {
-      ...this.getHeaders(),
-      responseType: 'arraybuffer',
-    });
   }
 
   get<T = unknown>(url: string, params?: HttpParams): Observable<T> {
