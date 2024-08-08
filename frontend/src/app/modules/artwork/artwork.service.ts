@@ -2,7 +2,8 @@ import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ApiService } from '../../services/api.service';
 import { APIS } from '../../constants/api.constants';
-import { $PaginatedResponse, Artwork, PaginatedResponse } from '../../models/common.model';
+import { $PaginatedResponse, PaginatedResponse } from '../../models/common.model';
+import { Artwork } from '../../models/artwork.model';
 
 @Injectable({
   providedIn: 'root'

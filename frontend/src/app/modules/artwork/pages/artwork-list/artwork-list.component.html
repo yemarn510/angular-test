@@ -1,4 +1,15 @@
 
+
+<div class="filter-container">
+  <nx-formfield label="Style">
+    <nx-multi-select
+      [options]="artworkStyles"
+      [(ngModel)]="selectedStyles"
+      selectLabel="label"
+      selectValue="value"></nx-multi-select>
+  </nx-formfield>
+</div>
+
 <div class="artwork-container">
   @for (eachArtwork of artworks; track eachArtwork.id) {
   <div class="artwork-box">

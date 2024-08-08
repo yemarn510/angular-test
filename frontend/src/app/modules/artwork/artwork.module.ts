@@ -4,6 +4,14 @@ import { ArtworkListComponent } from './pages/artwork-list/artwork-list.componen
 import { ArtworkRoutingModule } from './artwork-routing.module';
 import { NxPaginationComponent } from '@aposin/ng-aquila/pagination';
 import { LoadingSpinnerComponent } from '../../standalone/loading-spinner/loading-spinner.component';
+import { NxFormfieldComponent } from '@aposin/ng-aquila/formfield';
+import {
+  NxDropdownComponent,
+  NxDropdownItemComponent,
+} from '@aposin/ng-aquila/dropdown';
+import { NxMultiSelectComponent } from '@aposin/ng-aquila/dropdown';
+import { FormsModule } from '@angular/forms';
+
 
 
 @NgModule({
@@ -12,9 +20,12 @@ import { LoadingSpinnerComponent } from '../../standalone/loading-spinner/loadin
   ],
   imports: [
     CommonModule,
+    FormsModule,
     ArtworkRoutingModule,
 
     NxPaginationComponent,
+    NxFormfieldComponent,
+    NxMultiSelectComponent,
 
     LoadingSpinnerComponent,    
   ],

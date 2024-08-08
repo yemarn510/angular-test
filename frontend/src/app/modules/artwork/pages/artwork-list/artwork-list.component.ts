@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ArtworkService } from '../../artwork.service';
 import { HttpParams } from '@angular/common/http';
-import { Artwork } from '../../../../models/common.model';
+import { Artwork, ArtworkStyleDropdown } from '../../../../models/artwork.model';
 
 @Component({
   selector: 'app-artwork-list',
@@ -9,7 +9,6 @@ import { Artwork } from '../../../../models/common.model';
   styleUrl: './artwork-list.component.scss'
 })
 export class ArtworkListComponent implements OnInit {
-
 
   page: number = 1;
   count: number = 0;
@@ -19,7 +18,10 @@ export class ArtworkListComponent implements OnInit {
 
   config: string = '';
 
-  artworks: Artwork[] = []; 
+  selectedStyles: string[] = [];
+
+  artworks: Artwork[] = [];
+  artworkStyles: ArtworkStyleDropdown[] = [];
 
   constructor(
     private artworkService: ArtworkService
@@ -40,6 +42,7 @@ export class ArtworkListComponent implements OnInit {
         this.artworks = res.data;
         this.count = res.pagination.total;
         this.config = res.config.iiif_url;
+        this.artworkStyles = this.createStyleList(this.artworks);
       },
       error: (err) => {
         console.error(err);
@@ -47,18 +50,43 @@ export class ArtworkListComponent implements OnInit {
     });
   }
 
-  prevPage() {
+  prevPage(): void {
     this.page = this.page - 1;
     this.getArtworks();
   }
 
-  nextPage() {
+  nextPage(): void {
     this.page = this.page + 1;
     this.getArtworks();
   }
 
-  goToPage(n: number) {
-    this.page = n;
+  goToPage(pageNumber: number): void {
+    this.page = pageNumber;
     this.getArtworks();
+  }
+
+  createStyleList(artworks: Artwork[]): ArtworkStyleDropdown[] {
+    if (!artworks.length) {
+      return [];
+    }
+
+    const groupByArtworkStyles: { [key in string]: number} = {};
+
+    artworks.forEach((artwork) => {
+      artwork.style_titles.forEach((style) => {
+        if (groupByArtworkStyles[style]) {
+          groupByArtworkStyles[style] += 1;
+        } else {
+          groupByArtworkStyles[style] = 1;
+        }
+      });
+    });
+
+    return Object.keys(groupByArtworkStyles).map((key) => {
+      return{
+        value: key,
+        label: `${key} (${groupByArtworkStyles[key]})`
+      };
+    });
   }
 }
