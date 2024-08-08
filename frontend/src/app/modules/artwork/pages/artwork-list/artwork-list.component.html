@@ -9,7 +9,7 @@
         <nx-multi-select
           [options]="artworkStyles"
           [(ngModel)]="selectedStyles"
-          (selectionChange)="filterArtworks()"
+          (selectionChange)="filterAndSortArtworks()"
           selectLabel="label"
           selectValue="value"></nx-multi-select>
       </nx-formfield>
@@ -18,7 +18,7 @@
       <h2 class="custom-margin-b">Sort by:</h2>
       <nx-formfield label="Recommendation">
         <nx-dropdown
-          (selectionChange)="sortArtwork()"
+          (selectionChange)="filterAndSortArtworks()"
           [(ngModel)]="sortBy">
           @for (option of sortByList; track option) {
           <nx-dropdown-item

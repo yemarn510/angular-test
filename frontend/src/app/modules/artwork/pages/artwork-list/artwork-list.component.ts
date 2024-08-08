@@ -59,7 +59,7 @@ export class ArtworkListComponent implements OnInit {
         this.config = res.config.iiif_url;
         this.selectedStyles = [];
         this.artworkStyles = this.createStyleList(res.data);
-        this.sortArtwork();
+        this.filterAndSortArtworks();
       },
       error: (err) => {
         console.error(err);
@@ -107,36 +107,38 @@ export class ArtworkListComponent implements OnInit {
     });
   }
 
-  filterArtworks(): void {
+  filterArtworks(artworkList: Artwork[] = this.copiedArtworks): Artwork[] {
     if (!this.selectedStyles.length) {
-      this.artworks = structuredClone(this.copiedArtworks);
-      return;
+      return structuredClone(artworkList);
     }
 
-    this.artworks = this.copiedArtworks.filter((artwork) => {
+    return artworkList.filter((artwork) => {
       return artwork.style_titles.some((style) => this.selectedStyles.includes(style));
     });
   }
 
-  sortArtwork(): void {
+  sortArtworks(artworkList: Artwork[] = this.copiedArtworks): Artwork[] {
     if (!this.sortBy) {
-      this.artworks = structuredClone(this.copiedArtworks);
-      return;
+      return structuredClone(artworkList);
     }
 
     if (this.sortBy === 'date_start') {
-      this.artworks = this.copiedArtworks.sort((first, second) => {
+      return artworkList.sort((first, second) => {
         const firstDate = new Date(first.date_start as string);
         const secondDate = new Date(second.date_start as string);
         return firstDate.getTime() - secondDate.getTime();
       });
-      return;
     }
 
-    this.artworks = this.copiedArtworks.sort((first, second) => {
+    return artworkList.sort((first, second) => {
       const firstString = (first[this.sortBy as keyof Artwork] || '') as string;
       const secondString = (second[this.sortBy as keyof Artwork] || '') as string;
       return firstString.localeCompare(secondString);
     });
+  }
+
+  filterAndSortArtworks(): void {
+    this.artworks = this.filterArtworks();
+    this.artworks = this.sortArtworks(this.artworks);
   }
 }
