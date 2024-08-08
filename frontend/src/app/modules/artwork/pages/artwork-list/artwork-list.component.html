@@ -42,9 +42,9 @@
         [alt]="eachArtwork.thumbnail?.alt_text || ''" />
     </div>
     <div class="artwork-info">
-      <h4 class="title">{{ eachArtwork.title }}</h4>
-      <h5 class="artist">{{ eachArtwork.artist_title }}</h5>
-      <h5 class="nx-font-weight-light">
+      <h3 class="title">{{ eachArtwork.title }}</h3>
+      <h4 class="artist">{{ eachArtwork.artist_title }}</h4>
+      <h4 class="nx-font-weight-light">
         {{ eachArtwork.place_of_origin || '' }}
         {{
         !eachArtwork.date_start || !eachArtwork.date_start
@@ -53,10 +53,10 @@
         ? '(' + eachArtwork.date_start + ')'
         : '(' + eachArtwork.date_start + ' - ' + eachArtwork.date_end + ')'
         }}
-      </h5>
-      <h5 class="nx-font-weight-light">
+      </h4>
+      <h4 class="nx-font-weight-light">
         {{ eachArtwork.medium_display }}
-      </h5>
+      </h4>
     </div>
   </div>
   }
