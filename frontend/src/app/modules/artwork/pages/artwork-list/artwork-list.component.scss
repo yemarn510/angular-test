@@ -17,6 +17,12 @@
   gap: 1rem;
   overflow-y: auto;
   max-height: calc(100dvh - 300px);
+
+  @media screen and (max-width: 768px) {
+    grid-template-columns: repeat(1, 80vw);
+    max-height: calc(100dvh - 400px);
+    gap: 1.5rem;
+  }
 }
 
 .artwork-box {
@@ -56,4 +62,11 @@
   max-width: 800px;
   padding: 0 2rem;
   margin: auto;
+}
+
+
+@media screen and (max-width: 768px) {
+  .artwork-box {
+    width: 100%;
+  }
 }
