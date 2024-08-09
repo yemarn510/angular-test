@@ -33,4 +33,4 @@ jobs:
           yarn test --no-watch --source-map=false --browsers=ChromeHeadless
           yarn build --configuration=production
           yarn global add wrangler --unsafe-perm=true
-          wrangler pages publish ./dist --project-name=angular-test-aug --branch=main
+          wrangler pages publish ./dist/frontend/browser --project-name=angular-test-aug --branch=main
