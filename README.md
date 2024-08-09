@@ -4,6 +4,8 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 This project used [@aposin/ng-aquila](https://github.com/allianz/ng-aquila) library for the UI components.
 
+[Demo_website](https://angular-test-aug.pages.dev/)
+
 ## Folder Structure
 
 ### Constants
