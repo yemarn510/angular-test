@@ -33,7 +33,9 @@ describe('ArtworkListComponent', () => {
   });
 
   it('should create a list of value and label objects for dropdown', () => {
-    const mockArtworks: Artwork[] = DUMMY_RESPONSE.data;
+    const mockArtworks: Artwork[] = DUMMY_RESPONSE.data.sort(
+      (first, second) => first.id - second.id 
+    );
     const expectedStyles: ArtworkStyleDropdown[] = [
       { value: 'Classic', label: 'Classic (1)' },
       { value: 'Modernism', label: 'Modernism (1)' },
